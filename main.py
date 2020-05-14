@@ -3,27 +3,28 @@ import random
 from entity import Entity
 from location import Location
 
-weather = ["fair"]
 #pace = 3 # miles per hour
 terrain = {"rough": .75, "normal": 1, "easy": 1.5}
 
-def describeScene(clock):
-    print("A %s %s." % (checkWeather(), checkTime(clock)))
+def describeScene(clock, location):
+    print("A %s %s." % (checkWeather(location), checkTime(clock, location)))
 
-def checkTime(clock):
+def checkTime(clock, location):
     timeOfDay = ["small hours", "morning", "afternoon", "night"]
     #               12-6          6-12        12-6      6-12
 
     #TODO: iterate
     if clock < 6:
+        weatherUpdate(location)
         return timeOfDay[0]
-    
     elif clock < 12:
+        weatherUpdate(location)
         return timeOfDay[1]
-
     elif clock < 18:
+        weatherUpdate(location)
         return timeOfDay[2]
     elif clock < 24:
+        weatherUpdate(location)
         return timeOfDay[3]
     else:
         print("WE ARE  N O W H E N")
@@ -35,12 +36,15 @@ def clockUpdate(clock):
         clock -= 24
 
 
-def checkWeather():
-    check = random.randint(0, 143)
-    if check < 72:
-        return "rain"
+def checkWeather(location):
+    #check = random.randint(0, 143)
+    if location.weather < 72:
+        return "precipitation"
     else:
         return "clear"
+    
+def weatherUpdate(location):
+    location.weather = random.randint(0, 143)
 
 def march(entity, pace, duration, clock):
     entity.location += (pace * duration)
@@ -66,8 +70,8 @@ def main():
         time.sleep(.1)
 
         if choice == "1":
-            describeScene(clock)
-            input()
+            describeScene(clock, location)
+            #input()
 
         elif choice == "2":
             clock += 1
