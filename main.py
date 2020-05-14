@@ -4,12 +4,11 @@ from entity import Entity
 from location import Location
 
 weather = ["fair"]
-pace = 3 # miles per hour
+#pace = 3 # miles per hour
 terrain = {"rough": .75, "normal": 1, "easy": 1.5}
-#duration = # hour
 
 def describeScene(clock):
-    print("A %s %s." % (checkWeather(), checkTime(clock))
+    print("A %s %s." % (checkWeather(), checkTime(clock)))
 
 def checkTime(clock):
     timeOfDay = ["small hours", "morning", "afternoon", "night"]
@@ -31,6 +30,10 @@ def checkTime(clock):
     # elif: clock > 24; clock -= 24
     # need clock function to reset
 
+def clockUpdate(clock):
+    if clock > 24:
+        clock -= 24
+
 
 def checkWeather():
     check = random.randint(0, 143)
@@ -42,7 +45,6 @@ def checkWeather():
 def march(entity, pace, duration, clock):
     entity.location += (pace * duration)
     clock += duration
-    #print(clock)
 
 def main():
     player = Entity("Anu", 0)
@@ -50,38 +52,32 @@ def main():
     clock = 0
     
     distance = 0
-    distanceMax = 100
     
     speedBase = 1.5
     
     play = True
     
     while play == True:
+        clockUpdate(clock)
+        # TODO weatherUpdate()
         print("\n")
         print("Time: %i\nLocation: %i" % (clock, player.location))
-        choice = input("\nchoices: \n%s\n%s\n" % ("1 - scene", "2 - march")) #list choices
-        #distance += speedBase
+        choice = input("\nchoices: \n%s\n%s\n%s\n" % ("1- scene", "2- march", "3- pace")) #list choices
         time.sleep(.1)
-        #print(distance)
 
         if choice == "1":
-            describeScene()
-            print(checkWeather())
+            describeScene(clock)
             input()
 
         elif choice == "2":
             clock += 1
-            march(player, 24, 1, clock)
-            #input()
+            march(player, int(input("How fast? ")), 1, clock)
 
         elif choice == "quit":
             quit()
 
         else:
-            pass
-
-        #if distance >= distanceMax:
-            #play = not play
+            print("ivalid input")
 
 main()
 
