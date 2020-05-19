@@ -32,6 +32,7 @@ def checkTime(clock, location):
     # need clock function to reset
 
 def clockUpdate(clock):
+    # % it up
     if clock > 24:
         clock -= 24
 
@@ -47,7 +48,9 @@ def weatherUpdate(location):
     location.weather = random.randint(0, 143)
 
 def march(entity, pace, duration, clock):
-    entity.location += (pace * duration)
+    distance_travelled = (pace * duration)
+    entity.location += distance_travelled
+    entity.resource_a -= distance_travelled
     clock += duration
 
 def main():
@@ -63,9 +66,8 @@ def main():
     
     while play == True:
         clockUpdate(clock)
-        # TODO weatherUpdate()
         print("\n")
-        print("Time: %i\nLocation: %i" % (clock, player.location))
+        print("Time: %i\nLocation: %i\nresource_a: %i" % (clock, player.location, player.resource_a))
         choice = input("\nchoices: \n%s\n%s\n%s\n" % ("1- scene", "2- march", "3- pace")) #list choices
         time.sleep(.1)
 
@@ -74,6 +76,7 @@ def main():
             #input()
 
         elif choice == "2":
+            # Change to Action menu?
             clock += 1
             march(player, int(input("How fast? ")), 1, clock)
 
