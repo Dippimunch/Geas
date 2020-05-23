@@ -3,7 +3,8 @@ import random
 from entity import Entity
 from location import Location
 
-#pace = 3 # miles per hour
+
+
 terrain = {"rough": .75, "normal": 1, "easy": 1.5}
 
 def describeScene(clock, location):
@@ -33,9 +34,17 @@ def checkTime(clock, location):
 
 def clockUpdate(clock):
     # % it up
-    if clock > 24:
-        clock -= 24
+    hour = 0
+    day = 0 # 24
+    month = 0 # 720
+    year = 0 # 8760 hours
 
+    # if clock > 8760
+    #      year = clock % 8760
+    #      if year != 0:
+    #   clock / 8760
+    if clock % 8760 == 0:
+        year = clock / 8760
 
 def checkWeather(location):
     #check = random.randint(0, 143)
